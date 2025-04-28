@@ -1,17 +1,22 @@
 <?php
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
 class TriageEntry extends Model {
     protected $fillable = [
-        'patient_id', 'nurse_id', 'heart_rate', 'blood_pressure', 
-        'temperature', 'oxygen_saturation', 'respiratory_rate', 
-        'symptoms', 'priority', 'notes'
+        'patient_id', 
+        'nurse_id', 
+        'heart_rate', 
+        'blood_pressure', 
+        'temperature', 
+        'oxygen_saturation', 
+        'respiratory_rate', 
+        'symptoms', 
+        'priority', 
+        'notes'
     ];
 
-    // Relaciones:
     public function patient() {
         return $this->belongsTo(Patient::class);
     }

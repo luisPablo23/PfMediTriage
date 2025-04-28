@@ -5,9 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 
 class Patient extends Model {
-    protected $fillable = ['name', 'gender', 'age', 'identification_number', 'phone', 'address'];
+    protected $fillable = [
+        'name',
+        'gender',
+        'age',
+        'identification_number',
+        'phone',
+        'address',
+    ];
 
-    // Relaciones:
     public function triageEntries() {
         return $this->hasMany(TriageEntry::class);
     }
@@ -18,5 +24,9 @@ class Patient extends Model {
 
     public function appointments() {
         return $this->hasMany(Appointment::class);
+    }
+
+    public function medicalHistories() {
+        return $this->hasMany(MedicalHistory::class);
     }
 }

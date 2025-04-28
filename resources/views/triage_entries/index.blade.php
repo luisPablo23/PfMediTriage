@@ -4,7 +4,7 @@
 <div class="container">
     <h1 class="my-4">Registros de Triaje</h1>
 
-    <a href="{{ route('triages.create') }}" class="btn btn-primary mb-3">Nuevo Triaje</a>
+    <a href="{{ route('triage_entries.create') }}" class="btn btn-primary mb-3">Nuevo Triaje</a>
 
     @if(session('success'))
         <div class="alert alert-success">{{ session('success') }}</div>
@@ -22,7 +22,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach($triages as $triage)
+            @foreach($triageEntries as $triage)
             <tr>
                 <td>{{ $triage->patient->name }}</td>
                 <td>{{ $triage->nurse->name }}</td>
@@ -37,9 +37,9 @@
                 </td>
                 <td>{{ $triage->created_at->format('d/m/Y H:i') }}</td>
                 <td>
-                    <a href="{{ route('triages.edit', $triage->id) }}" class="btn btn-sm btn-warning">Editar</a>
+                    <a href="{{ route('triage_entries.edit', $triage->id) }}" class="btn btn-sm btn-warning">Editar</a>
 
-                    <form action="{{ route('triages.destroy', $triage->id) }}" method="POST" style="display:inline-block;">
+                    <form action="{{ route('triage_entries.destroy', $triage->id) }}" method="POST" style="display:inline-block;">
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('¿Seguro que deseas eliminar este registro?')">Eliminar</button>

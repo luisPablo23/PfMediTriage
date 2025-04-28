@@ -2,63 +2,43 @@
 
 @section('content')
 <div class="container">
-    <div class="d-flex justify-content-between align-items-center my-4">
-        <h1>Listado de Pacientes</h1>
-        <a href="{{ route('patients.create') }}" class="btn btn-success">+ Nuevo Paciente</a>
-    </div>
-    
-    <div class="table-responsive">
-        <table class="table table-bordered table-hover">
-            <thead class="table-dark">
-                <tr>
-                    <th>Nombre</th>
-                    <th>Edad</th>
-                    <th>Teléfono</th>
-                    <th>Último Triaje</th>
-                    <th>Prioridad</th>
-                    <th>Acciones</th> <!-- Nueva columna para botones -->
-                </tr>
-            </thead>
-            <tbody>
-                @forelse($patients as $patient)
-                <tr>
-                    <td>{{ $patient->name }}</td>
-                    <td>{{ $patient->age }} años</td>
-                    <td>{{ $patient->phone }}</td>
-                    <td>
-                        @if($patient->triageEntries->first())
-                            {{ $patient->triageEntries->first()->symptoms }}
-                        @else
-                            <span class="text-muted">Sin triaje</span>
-                        @endif
-                    </td>
-                    <td>
-                        @if($patient->triageEntries->first())
-                            @php $priority = $patient->triageEntries->first()->priority; @endphp
-                            <span class="badge 
-                                {{ $priority == 'red' ? 'bg-danger' : 
-                                   ($priority == 'yellow' ? 'bg-warning' : 'bg-success') }}">
-                                {{ strtoupper($priority) }}
-                            </span>
-                        @endif
-                    </td>
-                    <td class="d-flex gap-2">
-                        <a href="{{ route('patients.edit', $patient) }}" class="btn btn-sm btn-primary">Editar</a>
+    <h1 class="my-4">Registros de Pacientes</h1>
 
-                        <form action="{{ route('patients.destroy', $patient) }}" method="POST" onsubmit="return confirm('¿Estás seguro de eliminar este paciente?');">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-sm btn-danger">Eliminar</button>
-                        </form>
-                    </td>
-                </tr>
-                @empty
-                <tr>
-                    <td colspan="6" class="text-center">No hay pacientes registrados</td>
-                </tr>
-                @endforelse
-            </tbody>
-        </table>
-    </div>
+    <a href="{{ route('patients.create') }}" class="btn btn-primary mb-3">Nuevo Paciente</a>
+
+    @if(session('success'))
+        <div class="alert alert-success">{{ session('success') }}</div>
+    @endif
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Género</th>
+                <th>Edad</th>
+                <th>Número de Identificación</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach($patients as $patient)
+            <tr>
+                <td>{{ $patient->name }}</td>
+                <td>{{ ucfirst($patient->gender) }}</td>
+                <td>{{ $patient->age }}</td>
+                <td>{{ $patient->identification_number }}</td>
+                <td>
+                    <a href="{{ route('patients.edit', $patient->id) }}" class="btn btn-sm btn-warning">Editar</a>
+
+                    <form action="{{ route('patients.destroy', $patient->id) }}" method="POST" style="display:inline-block;">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('¿Seguro que deseas eliminar este paciente?')">Eliminar</button>
+                    </form>
+                </td>
+            </tr>
+            @endforeach
+        </tbody>
+    </table>
 </div>
 @endsection
