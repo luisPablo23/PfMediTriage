@@ -17,7 +17,6 @@ class TriageEntryController extends Controller
 
     public function create()
     {
-        
         $patients = Patient::all(); // Obtener todos los pacientes
         return view('triage_entries.create', compact('patients'));
     }
