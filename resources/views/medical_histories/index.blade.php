@@ -23,10 +23,10 @@
         <tbody>
             @foreach($medicalHistories as $history)
             <tr>
-                <td>{{ $history->patient->name }}</td>
+                <td>{{ $history->patient->name ?? 'N/A' }}</td>
                 <td>{{ $history->condition }}</td>
                 <td>{{ $history->treatment }}</td>
-                <td>{{ $history->date->format('d/m/Y') }}</td>
+                <td>{{ $history->date ? $history->date->format('d/m/Y') : 'Sin fecha' }}</td>
                 <td>
                     <a href="{{ route('medical_histories.edit', $history->id) }}" class="btn btn-sm btn-warning">Editar</a>
 

@@ -65,8 +65,7 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
-
+    'timezone' => 'America/La_Paz', // Zona horaria correcta para Bolivia
     /*
     |--------------------------------------------------------------------------
     | Application Locale Configuration

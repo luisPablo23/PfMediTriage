@@ -27,7 +27,7 @@
                 <td>{{ $appointment->patient->name }}</td>
                 <td>{{ $appointment->receptionist->name }}</td>
                 <td>{{ $appointment->date->format('d/m/Y') }}</td>
-                <td>{{ $appointment->time }}</td>
+                <td>{{ \Carbon\Carbon::parse($appointment->time)->format('H:i') }}</td>
                 <td>{{ $appointment->reason }}</td>
                 <td>
                     <a href="{{ route('appointments.edit', $appointment->id) }}" class="btn btn-sm btn-warning">Editar</a>

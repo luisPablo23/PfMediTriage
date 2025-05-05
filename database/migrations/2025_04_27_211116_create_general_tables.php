@@ -92,7 +92,7 @@ return new class extends Migration
             $table->foreignId('patient_id')->constrained();
             $table->text('condition');
             $table->text('treatment');
-            $table->date('date');
+            $table->dateTime('date'); // Cambiado de date() a dateTime()
             $table->timestamps();
         });
 

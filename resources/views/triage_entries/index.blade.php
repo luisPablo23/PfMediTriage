@@ -24,18 +24,27 @@
         <tbody>
             @foreach($triageEntries as $triage)
             <tr>
-                <td>{{ $triage->patient->name }}</td>
-                <td>{{ $triage->nurse->name }}</td>
+                <td>{{ $triage->patient->name ?? 'N/A' }}</td>
+                <td>{{ $triage->nurse->name ?? 'N/A' }}</td>
                 <td>{{ Str::limit($triage->symptoms, 50) }}</td>
                 <td>
                     <span class="badge 
-                        {{ $triage->priority == 'red' ? 'bg-danger' : 
-                           ($triage->priority == 'yellow' ? 'bg-warning' : 
-                           ($triage->priority == 'green' ? 'bg-success' : 'bg-primary')) }}">
+                        @switch($triage->priority)
+                            @case('red') bg-danger @break
+                            @case('yellow') bg-warning text-dark @break
+                            @case('green') bg-success @break
+                            @default bg-primary
+                        @endswitch">
                         {{ strtoupper($triage->priority) }}
                     </span>
                 </td>
-                <td>{{ $triage->created_at->format('d/m/Y H:i') }}</td>
+                <td>
+                    @if($triage->created_at)
+                        {{ $triage->created_at->format('d/m/Y H:i') }}
+                    @else
+                        Fecha no disponible
+                    @endif
+                </td>
                 <td>
                     <a href="{{ route('triage_entries.edit', $triage->id) }}" class="btn btn-sm btn-warning">Editar</a>
 
